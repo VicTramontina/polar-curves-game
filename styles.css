@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+
+
+#canvas-container {
+    margin-top: 20px;   
+}
+
+
+#random-curve-container {
+    margin-top: 20px;
+    border: 1px solid black;
+}
+
+#user-equation {
+    margin: 10px;
+    padding: 5px;
+    width: 200px;
+}
+
+button {
+    margin: 10px;
+    padding: 5px 15px;
+}
+
+#score-display {
+    margin: 10px;
+    font-size: 1.2em;
+}

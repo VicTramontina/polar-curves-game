@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'Espiral arquimediana': 'r = 0.1 * theta',
         'Espiral de Fermat': 'r = 0.5 * sqrt(theta)',
         'Espiral logarítmica': 'r = exp(0.06 * theta)',
-        'Espiral hiperbólica': 'r = 8 / theta',
+        'Espiral hiperbólica': 'r = 8 / theta'
     };    
 
     // generate random curve
@@ -25,8 +25,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     
         p.draw = function () {
-            p.background(255); 
+            p.background(255);
             p.translate(p.width / 2, p.height / 2);  // move pro centro do canvas
+
+            p.strokeWeight(3);
     
             p.beginShape(); 
 
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 range *= 4;
             }
 
-            for (let theta = 0; theta < range; theta += 0.0001) { // 2pi = 360 graus
+            for (let theta = 0; theta < range; theta += 0.001) { // 2pi = 360 graus
                 let r;
                 try {
                     r = evaluatePolarEquation(theta, p); // Passing p as an argument
@@ -58,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function evaluatePolarEquation(theta, p) {
         let scope = { theta: theta };
-        let scalingFactor = 50; // Adjust this factor as needed
+        let scalingFactor = 50;
         let r = math.evaluate(randomCurve, scope);
         return r * scalingFactor; // Scale the radius
     }

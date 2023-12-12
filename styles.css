@@ -1,17 +1,132 @@
+:root{
+    --primary: #e6cdaf;
+    --secondary: #fad483;
+    --black: #2E2E2E;
+    --white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100vh;
+}
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
-    padding: 20px;
-    background-color: #f0f0f0;
+    min-height: 100%;
+    background-image: url('images/background.webp');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
+#start-menu{
+    display: block;
+}
 
+.start-menu-container {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
+}
+
+.dificuldades {     
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 340px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.iniciar-botao{
+    width: 340px;
+}
+
+.botao{
+    width: 100%;
+    height: 50px;
+    background-color: var(--primary);
+    border: 4px solid var(--secondary);
+    font-size: larger;
+    color: var(--black);
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.botao:hover{
+    background-color: var(--secondary);
+    border: 4px solid var(--primary);
+    color: var(--black);
+}
+
+.selected {
+    background-color: var(--secondary);
+    border: 4px solid var(--primary);
+    color: var(--black);
+}
+
+#game {
+    display: none;
+}
+
+#instrucoes {
+    width: 340px;
+    padding: 20px;
+    text-align: justify;
+    background-color: var(--primary);
+    border-radius: 10px;
+}
+li{
+    margin: 10px;
+}
+
+.voltar{
+    width: 250px;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    top: 10px;
+    left: 10px;
+}
+
+#pontuacao{
+    display: none;
+}
+
+.game-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-height: 100vh;
+    width: 100%;
+}
 
 #canvas-container {
     margin-top: 20px;   
 }
 
+#random-curve {
+    font-size: 22px;
+    background-color: var(--primary);
+    padding: 5px;
+    margin: 20px;
+    border-radius: 10px;
+}
 
 #random-curve-container {
     margin-top: 20px;
@@ -24,12 +139,15 @@ body {
     width: 200px;
 }
 
-button {
-    margin: 10px;
-    padding: 5px 15px;
-}
-
 #score-display {
     margin: 10px;
     font-size: 1.2em;
+}
+
+#opcoes-container{
+    display: grid;
+    width: 600px;
+    gap: 10px;
+    max-width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }

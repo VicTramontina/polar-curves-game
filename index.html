@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+    <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coordenadas Polares</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="stylesheet" type="text/css" href="libs/mathQuill/mathquill-basic.css">
@@ -10,17 +11,61 @@
     <script src="libs/p5.js"></script>
     <script src="libs/math.js"></script>
     <script src="libs/mathQuill/mathquill.min.js"></script>
+    <script src="libs/p5Anim/p5.anims.min.js"></script>
+    <script src="libs/p5Anim/p5.anims.js"></script>
 </head>
 <body>  
+    <section id="start-menu">
+        <div class="start-menu-container">
+            <div class="iniciar-botao">
+                <button id="botao-start" class="botao" onclick="startGame()">Iniciar Jogo</button>
+            </div>
+            <div class="dificuldades">
+                <button name="dificuldade" class="botao selected" onclick="setDificuldade(0)">Fácil</button>
+                <button name="dificuldade" class="botao" onclick="setDificuldade(1)">Médio</button>
+                <button name="dificuldade" class="botao" onclick="setDificuldade(2)">Difícil</button>
+            </div>
+            <div id="instrucoes">
+                Dificuldades: <br>
+                <ul>
+                    <li>
+                        <b>Fácil: </b> Apenas nomes das curvas polares.
+                    </li>
+                    <li>
+                        <b>Médio: </b> Nomes das curvas polares e suas equações.
+                    </li>
+                    <li>
+                        <b>Difícil: </b> Apenas as equações das curvas polares.
+                    </li>
+                </ul>
+                <div id="pontuacao">
+                    Última pontuação: <span id="ultima-pontuacao">0</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div id="random-container">
-        <div id="random-curve"></div>
-        <div id="random-canvas"></div>
-    </div>
+    <section id="game">
+        <div class="voltar">
+            <button id="botao-voltar" class="botao" onclick="voltarMenu()">Voltar</button>
+            <button id="botao-animar" class="botao" onclick="ativarDesativarAnimacao()">Ativar Animação</button>
+        </div>
+        <div class="game-container">
+            <div id="random-container">
+                <div id="random-curve"></div>
+                <div id="random-canvas"></div>
+            </div>
+        
+            <div id="opcoes-container">
+        
+            </div>
+    
+            <div id="score">
+    
+            </div>
+        </div>
+    </section>
 
-    <div id="opcoes-container">
-
-    </div>
 
     <!-- scripts -->
     <script src="scripts/script.js"></script>

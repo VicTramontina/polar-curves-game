@@ -87,6 +87,7 @@ function generateQuestion() {
         
         if(dificuldade === 0) {
             let mathFieldSpan = document.getElementById('random-curve');
+            mathFieldSpan.style.display = 'block';
             mathFieldSpan.innerHTML = '';
             let mathField = MQ.StaticMath(mathFieldSpan);
             mathField.latex(randomCurve);
@@ -125,11 +126,8 @@ function generateQuestion() {
                 if (randomCurveName.includes('spiral')) {
                     range *= 4;
                 }
-                if (animacao) {
-                    drawPointsAnimated(p, range);
-                } else {
-                    drawPoints(p, range);
-                }
+                
+                animacao ? drawPointsAnimated(p, range) : drawPoints(p, range);
             }
         }
         

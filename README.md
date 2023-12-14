@@ -1,4 +1,4 @@
-Welcome to the Polar Coordinates Game! This games was made for using the knowledges in polar coordinates to generate polar curves using canvas and p5.js library.
+Welcome to the Polar Coordinates/Curve Game! This games was made for using the knowledges in polar coordinates to generate polar curves using canvas and p5.js library.
 
 ## Getting Started
 

@@ -12,6 +12,7 @@
 html {
     min-height: 100vh;
 }
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -23,7 +24,7 @@ body {
     background-size: cover;
 }
 
-#start-menu{
+#start-menu {
     display: block;
 }
 
@@ -38,7 +39,7 @@ body {
     width: 100%;
 }
 
-.dificuldades {     
+.difficulties {     
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 340px;
@@ -47,11 +48,11 @@ body {
     gap: 20px;
 }
 
-.iniciar-botao{
+.start-button {
     width: 340px;
 }
 
-.botao{
+.button {
     width: 100%;
     height: 50px;
     background-color: var(--primary);
@@ -63,7 +64,7 @@ body {
     border-radius: 10px;
 }
 
-.botao:hover{
+.button:hover {
     background-color: var(--secondary);
     border: 4px solid var(--primary);
     color: var(--black);
@@ -79,18 +80,19 @@ body {
     display: none;
 }
 
-#instrucoes {
+#instructions {
     width: 340px;
     padding: 20px;
     text-align: justify;
     background-color: var(--primary);
     border-radius: 10px;
 }
-li{
+
+li {
     margin: 10px;
 }
 
-.voltar{
+.return {
     width: 250px;
     position: fixed;
     display: flex;
@@ -102,11 +104,12 @@ li{
     left: 10px;
 }
 
-#pontuacao{
-    display: none;
+#score-display {
+    margin: 10px;
+    font-size: 1.2em;
 }
 
-.game-container{
+.game-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -144,7 +147,7 @@ li{
     font-size: 1.2em;
 }
 
-#opcoes-container{
+#options-container {
     display: grid;
     width: 600px;
     gap: 10px;

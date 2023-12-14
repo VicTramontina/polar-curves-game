@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas Polares</title>
+    <title>Polar Coordinates</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="stylesheet" type="text/css" href="libs/mathQuill/mathquill-basic.css">
 
@@ -17,38 +17,38 @@
 <body>  
     <section id="start-menu">
         <div class="start-menu-container">
-            <div class="iniciar-botao">
-                <button id="botao-start" class="botao" onclick="startGame()">Iniciar Jogo</button>
+            <div class="start-button">
+                <button id="start-button" class="button" onclick="startGame()">Start Game</button>
             </div>
-            <div class="dificuldades">
-                <button name="dificuldade" class="botao selected" onclick="setDificuldade(0)">Fácil</button>
-                <button name="dificuldade" class="botao" onclick="setDificuldade(1)">Médio</button>
-                <button name="dificuldade" class="botao" onclick="setDificuldade(2)">Difícil</button>
+            <div class="difficulties">
+                <button name="difficulty" class="button selected" onclick="setDifficulty(0)">Easy</button>
+                <button name="difficulty" class="button" onclick="setDifficulty(1)">Medium</button>
+                <button name="difficulty" class="button" onclick="setDifficulty(2)">Hard</button>
             </div>
-            <div id="instrucoes">
-                Dificuldades: <br>
+            <div id="instructions">
+                Difficulties: <br>
                 <ul>
                     <li>
-                        <b>Fácil: </b> Apenas nomes das curvas polares.
+                        <b>Easy: </b> Only names of polar curves.
                     </li>
                     <li>
-                        <b>Médio: </b> Nomes das curvas polares e suas equações.
+                        <b>Medium: </b> Names of polar curves and their equations.
                     </li>
                     <li>
-                        <b>Difícil: </b> Apenas as equações das curvas polares.
+                        <b>Hard: </b> Only the equations of polar curves.
                     </li>
                 </ul>
-                <div id="pontuacao">
-                    Última pontuação: <span id="ultima-pontuacao">0</span>
+                <div id="score">
+                    Last score: <span id="last-score">0</span>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="game">
-        <div class="voltar">
-            <button id="botao-voltar" class="botao" onclick="voltarMenu()">Voltar</button>
-            <button id="botao-animar" class="botao" onclick="ativarDesativarAnimacao()">Ativar Animação</button>
+        <div class="return">
+            <button id="return-button" class="button" onclick="backToMenu()">Return</button>
+            <button id="animate-button" class="button" onclick="toggleAnimation()">Toggle Animation</button>
         </div>
         <div class="game-container">
             <div id="random-container">
@@ -56,7 +56,7 @@
                 <div id="random-canvas"></div>
             </div>
         
-            <div id="opcoes-container">
+            <div id="options-container">
         
             </div>
     
@@ -66,9 +66,7 @@
         </div>
     </section>
 
-
     <!-- scripts -->
     <script src="scripts/script.js"></script>
 </body>
-
 </html>

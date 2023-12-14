@@ -1,43 +1,43 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let ultimaPontuacao = localStorage.getItem('ultimaPontuacao');
-    if(ultimaPontuacao) {
-        document.getElementById('pontuacao').style.display = 'block';
-        document.getElementById('ultima-pontuacao').innerHTML = ultimaPontuacao;
+    let lastScore = localStorage.getItem('lastScore');
+    if (lastScore) {
+        document.getElementById('score').style.display = 'block';
+        document.getElementById('last-score').innerHTML = lastScore;
     }
 });
 
 const MQ = MathQuill.getInterface(2);
 
 var score = 0;
-var dificuldade = 0;
-var fatorDeEscala = 50;
-var ultimaCurva = '';
-var animacao = false;
+var difficulty = 0;
+var scaleFactor = 50;
+var lastCurve = '';
+var animation = false;
 
 const randomCurves = {
-    'Rosácea': 'r = 3 * cos(4 * theta)',
-    'Limaçon com laço': 'r = 1 - 2*cos(theta)',
-    'Cardioide': 'r = 1 - cos(theta)',
-    'Lemniscata': 'r = sqrt(2 * cos(2 * theta))',
-    'Círculo': 'r = 2',
-    'Espiral arquimediana': 'r = 0.1 * theta',
-    'Espiral de Fermat': 'r = 0.5 * sqrt(theta)',
-    'Espiral logarítmica': 'r = exp(0.06 * theta)',
-    'Espiral hiperbólica': 'r = 8 / theta'
+    'Rose': 'r = 3 * cos(4 * theta)',
+    'Limaçon with loop': 'r = 1 - 2*cos(theta)',
+    'Cardioid': 'r = 1 - cos(theta)',
+    'Lemniscate': 'r = sqrt(2 * cos(2 * theta))',
+    'Circle': 'r = 2',
+    'Archimedean spiral': 'r = 0.1 * theta',
+    'Fermat spiral': 'r = 0.5 * sqrt(theta)',
+    'Logarithmic spiral': 'r = exp(0.06 * theta)',
+    'Hyperbolic spiral': 'r = 8 / theta'
 };   
 
-function setDificuldade(value) {
-    if(value === dificuldade) return;
-    dificuldade = Number(value);
-    document.getElementsByName('dificuldade').forEach((element, index)=> {
-        index === dificuldade && !element.classList.contains('selected') ? element.classList.add('selected') : element.classList.remove('selected');
+function setDifficulty(value) {
+    if (value === difficulty) return;
+    difficulty = Number(value);
+    document.getElementsByName('difficulty').forEach((element, index)=> {
+        index === difficulty && !element.classList.contains('selected') ? element.classList.add('selected') : element.classList.remove('selected');
     });
 }
 
 function clear() {
     document.getElementById('random-canvas').innerHTML = '';
     document.getElementById('random-curve').innerHTML = '';
-    document.getElementById('opcoes-container').innerHTML = '';
+    document.getElementById('options-container').innerHTML = '';
 }
  
 
@@ -52,40 +52,39 @@ function startGame() {
         document.getElementById('score').innerHTML = score;
         startGame();    
     }).catch(() => {
-        voltarMenu();
+        backToMenu();
     });
 }
 
-
-function voltarMenu() {
-    document.getElementById('ultima-pontuacao').innerHTML = score;
-    localStorage.setItem('ultimaPontuacao', score);
-    document.getElementById('pontuacao').style.display = 'block';
-    document.getElementById('botao-start').innerHTML = 'Jogar novamente';
-    document.getElementById('game').style.display = 'none';
+function backToMenu() {
     document.getElementById('start-menu').style.display = 'block';
+    document.getElementById('game').style.display = 'none';
+    document.getElementById('score').style.display = 'block';
+    
+    localStorage.setItem('lastScore', score);
+    document.getElementById('last-score').innerHTML = score;
+
+    document.getElementById('start-button').innerHTML = 'Play again';
 
     score = 0;
 }
 
-function ativarDesativarAnimacao() {
-    animacao = !animacao;
-    document.getElementById('botao-animar').innerHTML = animacao ? 'Desativar animação' : 'Ativar animação';
+function toggleAnimation() {
+    animation = !animation;
+    document.getElementById('animate-button').innerHTML = animation ? 'Disable animation' : 'Enable animation';
 }
-
-
 
 function generateQuestion() {
     return new Promise((resolve, reject) => {
         
-        // gerar uma curva aleatória
+        // Generate a random curve
         let keys = Object.keys(randomCurves);
-        keys = keys.filter(key => key !== ultimaCurva); // não repetir a curva
+        keys = keys.filter(key => key !== lastCurve); // Avoid repeating the same curve
         let randomCurveName = keys[Math.floor(Math.random() * keys.length)];
         let randomCurve = randomCurves[randomCurveName];
-        ultimaCurva = randomCurveName; // salvar a curva para não repetir
+        lastCurve = randomCurveName; // Save the curve to avoid repetition
         
-        if(dificuldade === 0) {
+        if (difficulty === 0) {
             let mathFieldSpan = document.getElementById('random-curve');
             mathFieldSpan.style.display = 'block';
             mathFieldSpan.innerHTML = '';
@@ -95,7 +94,6 @@ function generateQuestion() {
             document.getElementById('random-curve').style.display = 'none';
         }
 
-
         let sketch = function (p) {
             p.setup = function () {
                 let canvas = p.createCanvas(500, 500); 
@@ -103,48 +101,46 @@ function generateQuestion() {
                 p.noLoop(); 
             }
 
-            
             p.draw = function () {
-                p.background(232, 227, 203); // background 
+                p.background(232, 227, 203); // Background 
                 
-                p.translate(p.width / 2, p.height / 2);  // move pro centro do canvas
+                p.translate(p.width / 2, p.height / 2);  // Move to the center of the canvas
                 
-                drawCartesianGrid(p, fatorDeEscala); // desenha a grade cartesiana
+                drawCartesianGrid(p, scaleFactor); // Draw the Cartesian grid
 
-                //inicio borda
+                // Start border
                 p.stroke(0);
                 p.strokeWeight(5);
                 p.noFill();
                 p.rect(-p.width/2, -p.height/2, p.width, p.height);
-                //fim borda
+                // End border
 
                 p.stroke(0);
                 p.strokeWeight(3);
 
                 let range = p.TWO_PI;
-                //mais pontos para espirais desenhar melhor
+                // More points for spiral curves to draw better
                 if (randomCurveName.includes('spiral')) {
                     range *= 4;
                 }
                 
-                animacao ? drawPointsAnimated(p, range) : drawPoints(p, range);
+                animation ? drawPointsAnimated(p, range) : drawPoints(p, range);
             }
         }
         
-        
         function drawPoints(p, range) {
             p.beginShape();
-            for (let theta = 0; theta < range; theta += 0.001) { // 2pi = 360 graus
+            for (let theta = 0; theta < range; theta += 0.001) { // 2pi = 360 degrees
                 let r;
                 try {
                     r = evaluatePolarEquation(theta, p); 
                 } catch (error) {
-                    console.error("Equação inválida:", error);
+                    console.error("Invalid equation:", error);
                     reject(error);
                     return;
                 }
                 
-                // converter de coordenadas polares para cartesianas
+                // Convert from polar coordinates to Cartesian coordinates
                 let x = r * p.cos(theta); 
                 let y = r * p.sin(theta); 
 
@@ -155,17 +151,17 @@ function generateQuestion() {
 
         async function drawPointsAnimated(p, range) {
             async function drawPoints() {
-                for (let theta = 0; theta < range; theta += 0.01) { // 2pi = 360 graus
+                for (let theta = 0; theta < range; theta += 0.01) { // 2pi = 360 degrees
                     let r;
                     try {
                         r = evaluatePolarEquation(theta, p); 
                     } catch (error) {
-                        console.error("Equação inválida:", error);
+                        console.error("Invalid equation:", error);
                         reject(error);
                         return;
                     }
                     
-                    // converter de coordenadas polares para cartesianas
+                    // Convert from polar coordinates to Cartesian coordinates
                     let x = r * p.cos(theta); 
                     let y = r * p.sin(theta); 
     
@@ -179,17 +175,17 @@ function generateQuestion() {
             drawPoints();
         }
 
-        function drawCartesianGrid(p, escala) {
-            p.stroke(180); //cinza 
+        function drawCartesianGrid(p, scale) {
+            p.stroke(180); // Gray color 
             p.strokeWeight(1);
 
-            // linhas horizontais
-            for (let y = -p.height; y < p.height; y += escala) {
+            // Horizontal lines
+            for (let y = -p.height; y < p.height; y += scale) {
                 p.line(-p.width, y, p.width, y);
             }
         
-            // linhas verticais
-            for (let x = -p.width; x < p.width; x += escala) {
+            // Vertical lines
+            for (let x = -p.width; x < p.width; x += scale) {
                 p.line(x, -p.height, x, p.height);
             }
         
@@ -203,12 +199,12 @@ function generateQuestion() {
         function evaluatePolarEquation(theta, p) {
             let scope = { theta: theta };   
             let r = math.evaluate(randomCurve, scope);
-            return r * fatorDeEscala; // scala o tamanho da curva
+            return r * scaleFactor; // Scale the size of the curve
         }
         
         function chooseOption(option) {
             return function() {
-                if(randomCurves[option] === randomCurve) {
+                if (randomCurves[option] === randomCurve) {
                     resolve();
                 } else {
                     reject();
@@ -217,16 +213,16 @@ function generateQuestion() {
         }
         
         function createOptions() {
-            let opcoesContainer = document.getElementById('opcoes-container');
+            let optionsContainer = document.getElementById('options-container');
             const keys = Object.keys(randomCurves);
             const equations = Object.values(randomCurves);
 
-            //dificuldade 0 = opcoes só com nomes
-            //dificuldade 1 = opcoes com nomes e equacoes
-            //dificuldade 2 = opcoes só com equacoes
+            // Difficulty 0 = options with names only
+            // Difficulty 1 = options with names and equations
+            // Difficulty 2 = options with equations only
             function createButton(text, key, type) {
                 let button = document.createElement('button');
-                if(type === 'equation'){
+                if (type === 'equation'){
                     let span = document.createElement('span');
                     button.appendChild(span);
                     MathQuill.StaticMath(span).latex(text);
@@ -234,11 +230,11 @@ function generateQuestion() {
                     button.innerHTML = text;
                 }
                 button.onclick = chooseOption(key);
-                button.classList.add('botao');
-                opcoesContainer.appendChild(button);
+                button.classList.add('button');
+                optionsContainer.appendChild(button);
             }
 
-            switch (dificuldade) {
+            switch (difficulty) {
                 case 0:
                     keys.forEach(key => createButton(key, key, 'text'));
                     break;
@@ -257,12 +253,3 @@ function generateQuestion() {
         createOptions();
     });
 }
-
-
-
-
-
-
-
-
-
